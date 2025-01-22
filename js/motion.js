@@ -52,11 +52,11 @@ NexT.motion.middleWares = {
 
     pushToSequence('.column');
     CONFIG.scheme === 'Mist' && getMistLineSettings('.logo-line');
-    CONFIG.scheme === 'Muse' && pushToSequence('.custom-logo-image');
+    CONFIG.scheme === 'Muse' && pushToSequence('.custom-logo-img');
     pushToSequence('.site-title');
     pushToSequence('.site-brand-container .toggle', true);
     pushToSequence('.site-subtitle');
-    (CONFIG.scheme === 'Pisces' || CONFIG.scheme === 'Gemini') && pushToSequence('.custom-logo-image');
+    (CONFIG.scheme === 'Pisces' || CONFIG.scheme === 'Gemini') && pushToSequence('.custom-logo-img');
 
     const menuItemTransition = CONFIG.motion.transition.menu_item;
     if (menuItemTransition) {

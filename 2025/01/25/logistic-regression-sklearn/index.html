@@ -19,22 +19,32 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.arorms.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Ar-Orms Blog">
-<meta property="og:url" content="http://blog.arorms.cn/index.html">
+    <meta name="description" content="逻辑回归的数学模型基本模型逻辑回归主要用于处理二分类问题。二分类问题对于模型的输出包含 0 和 1，是一个不连续的值。分类问题的结果一般不能由线性函数求出。这里就需要一个特别的函数来求解，这里引入一个新的函数 Sigmoid 函数，也成为逻辑函数。$$h_\theta(x) &#x3D; g(\theta^Tx) \z &#x3D; \theta^Tx \g(z) &#x3D; \frac{1}{">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sklearn 中的逻辑回归">
+<meta property="og:url" content="http://blog.arorms.cn/2025/01/25/logistic-regression-sklearn/index.html">
 <meta property="og:site_name" content="Ar-Orms Blog">
+<meta property="og:description" content="逻辑回归的数学模型基本模型逻辑回归主要用于处理二分类问题。二分类问题对于模型的输出包含 0 和 1，是一个不连续的值。分类问题的结果一般不能由线性函数求出。这里就需要一个特别的函数来求解，这里引入一个新的函数 Sigmoid 函数，也成为逻辑函数。$$h_\theta(x) &#x3D; g(\theta^Tx) \z &#x3D; \theta^Tx \g(z) &#x3D; \frac{1}{">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://blog.arorms.cn/img/sigmoid-function.png">
+<meta property="og:image" content="http://blog.arorms.cn/img/cost-funtion-of-sigmoid.png">
+<meta property="og:image" content="http://blog.arorms.cn/img/collage_commition_1.png">
+<meta property="og:image" content="http://blog.arorms.cn/img/collage-commition-2.png">
+<meta property="article:published_time" content="2025-01-25T14:59:00.000Z">
+<meta property="article:modified_time" content="2025-01-26T07:34:07.341Z">
 <meta property="article:author" content="Holmes Amzish">
+<meta property="article:tag" content="machine-learning">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.arorms.cn/img/sigmoid-function.png">
 
 
-<link rel="canonical" href="http://blog.arorms.cn/">
+<link rel="canonical" href="http://blog.arorms.cn/2025/01/25/logistic-regression-sklearn/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"en","comments":"","permalink":"","path":"index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://blog.arorms.cn/2025/01/25/logistic-regression-sklearn/","path":"2025/01/25/logistic-regression-sklearn/","title":"Sklearn 中的逻辑回归"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Ar-Orms Blog</title>
+<title>Sklearn 中的逻辑回归 | Ar-Orms Blog</title>
   
 
 
@@ -67,7 +77,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Ar-Orms Blog</h1>
+      <p class="site-title">Ar-Orms Blog</p>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -93,7 +103,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -106,6 +116,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E6%95%B0%E5%AD%A6%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">逻辑回归的数学模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">基本模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%B3%E7%AD%96%E8%BE%B9%E7%95%8C"><span class="nav-number">1.2.</span> <span class="nav-text">决策边界</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E4%BB%B7%E5%87%BD%E6%95%B0"><span class="nav-number">1.3.</span> <span class="nav-text">代价函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="nav-number">1.4.</span> <span class="nav-text">梯度下降</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Sklearn-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">Sklearn 逻辑回归模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%95%B4%E7%90%86"><span class="nav-number">2.1.</span> <span class="nav-text">数据整理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.2.</span> <span class="nav-text">逻辑回归模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81"><span class="nav-number">2.3.</span> <span class="nav-text">验证</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -152,16 +163,17 @@
 
     </div>
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="http://blog.arorms.cn/2025/01/25/logistic-regression-sklearn/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -175,13 +187,13 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Ar-Orms Blog">
+      <meta itemprop="name" content="Sklearn 中的逻辑回归 | Ar-Orms Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/01/25/logistic-regression-sklearn/" class="post-title-link" itemprop="url">Sklearn 中的逻辑回归</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          Sklearn 中的逻辑回归
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -210,8 +222,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="逻辑回归的数学模型"><a href="#逻辑回归的数学模型" class="headerlink" title="逻辑回归的数学模型"></a>逻辑回归的数学模型</h1><h2 id="基本模型"><a href="#基本模型" class="headerlink" title="基本模型"></a>基本模型</h2><p>逻辑回归主要用于处理二分类问题。二分类问题对于模型的输出包含 0 和 1，是一个不连续的值。分类问题的结果一般不能由线性函数求出。这里就需要一个特别的函数来求解，这里引入一个新的函数 Sigmoid 函数，也成为逻辑函数。<br>$$<br>h_\theta(x) &#x3D; g(\theta^Tx) \<br>z &#x3D; \theta^Tx \<br>g(z) &#x3D; \frac{1}{1 + e^{-z}}<br>$$<br>这里函数 $g(z)$ 将任何实数映射到了 $(0, 1)$ 区间中，从而将任何值函数转换为适合分类的函数。这里我们将线性回归模型函数插入到这个函数中形成新的逻辑回归模型。</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="逻辑回归的数学模型"><a href="#逻辑回归的数学模型" class="headerlink" title="逻辑回归的数学模型"></a>逻辑回归的数学模型</h1><h2 id="基本模型"><a href="#基本模型" class="headerlink" title="基本模型"></a>基本模型</h2><p>逻辑回归主要用于处理二分类问题。二分类问题对于模型的输出包含 0 和 1，是一个不连续的值。分类问题的结果一般不能由线性函数求出。这里就需要一个特别的函数来求解，这里引入一个新的函数 Sigmoid 函数，也成为逻辑函数。<br>$$<br>h_\theta(x) &#x3D; g(\theta^Tx) \<br>z &#x3D; \theta^Tx \<br>g(z) &#x3D; \frac{1}{1 + e^{-z}}<br>$$<br>这里函数 $g(z)$ 将任何实数映射到了 $(0, 1)$ 区间中，从而将任何值函数转换为适合分类的函数。这里我们将线性回归模型函数插入到这个函数中形成新的逻辑回归模型。</p>
 <img src="/img/sigmoid-function.png" width=90%>
 
 <center> 图 1 Sigmoid 函数</center>
@@ -248,7 +259,6 @@
 
 <center>图 4 决策边界</center>
 
-      
     </div>
 
     
@@ -256,131 +266,25 @@
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+          <div class="post-tags">
+              <a href="/tags/machine-learning/" rel="tag"># machine-learning</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/01/22/liner-regression-1/" rel="prev" title="Sklearn 中的线性回归模型">
+                  <i class="fa fa-angle-left"></i> Sklearn 中的线性回归模型
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
     </footer>
   </article>
 </div>
 
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://blog.arorms.cn/2025/01/22/liner-regression-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Holmes Amzish">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ar-Orms Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Ar-Orms Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/01/22/liner-regression-1/" class="post-title-link" itemprop="url">Sklearn 中的线性回归模型</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2025-01-22 14:27:00 / Modified: 17:00:42" itemprop="dateCreated datePublished" datetime="2025-01-22T14:27:00+08:00">2025-01-22</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="线性回归的数学模型"><a href="#线性回归的数学模型" class="headerlink" title="线性回归的数学模型"></a>线性回归的数学模型</h1><p>假设单变量回归模型：<br>$$<br>h_\theta(x) &#x3D; \theta^T x &#x3D; \theta_0 + \theta_1 x_1<br>$$<br>这里的 $\theta_0$ 就是偏置，而 $\theta_1$ 就是权重，而 $x_1$ 就是特征。</p>
-<p>线性回归方程的代价函数为：<br>$$<br>J(\theta) &#x3D; \frac{1}{2m} \sum^{m}{i &#x3D; 1}(h_\theta(x^{(i)}) - y^{(i)})^2<br>$$<br>这里根据代价函数来计算当前权重与偏置得到的方程与实际情况差距有多大，线性回归问题就是要通过一定方法找到最合适的参数来构造这个方程，也就是找到合适的 $\theta_0$ 和 $\theta_1$ 来使代价函数的值最小，也就是最符合实际情况。</p>
-<p>一般来说通过梯度下降的方法来让参数不断接近最优解：<br>$$<br>\theta_j:&#x3D; \theta_j - \alpha \frac{1}{m}\sum^m_{i &#x3D; 1}(h_\theta(x^{i}) - y^{(i)})x_j^{(i)}<br>$$<br>每次跟新都会根据代价函数来更改参数，代价函数在这里反应了与最优解的差距。而式中 $\alpha$ 为学习率，也就是每次更新的幅度。学习率过大会导致下降可能会跳过最优解甚至导致当前值与最优解越来越远，太小会导致循环次数过多靠近最优解的速度太慢。<br><img src="/img/cost_function.png" alt="cost_function"></p>
-<center>图 1 代建函数与两个参数的关系</center>
-
-<p>当然，在这里我们使用 python scikit-learn 库来构建线性回归模型，不需要完全读懂数学模型。只需要理解这个模型需要进行什么操作得到最终结果即可。</p>
-<h1 id="Sklearn-单变量线性回归"><a href="#Sklearn-单变量线性回归" class="headerlink" title="Sklearn 单变量线性回归"></a>Sklearn 单变量线性回归</h1><p>假设有一份食品供应商的数据，包含了城市的人口（population）和在这个城市的利润（profit），需要以人口作为特征来预测在某个城市的利润。</p>
-<h2 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h2><p>假设数据保存在本地的 <code>ex1data1.txt</code> 中并以 csv 文件格式保存，那么需要首先用 pandas 读取数据。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">data = pd.read_csv(<span class="string">&#x27;ex1data1.txt&#x27;</span>, header=none, names=[<span class="string">&#x27;population&#x27;</span>, <span class="string">&#x27;profit&#x27;</span>])</span><br><span class="line"><span class="built_in">print</span>(data.head())</span><br></pre></td></tr></table></figure>
-
-<p>查看到数据的头部信息：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   population   profit</span><br><span class="line">0      6.1101  17.5920</span><br><span class="line">1      5.5277   9.1302</span><br><span class="line">2      8.5186  13.6620</span><br><span class="line">3      7.0032  11.8540</span><br><span class="line">4      5.8598   6.8233</span><br></pre></td></tr></table></figure>
-
-<p>然后需要将特征和答案传入 Sklearn 线性回归模型，需要注意的是，这里是单变量回归，而一般的线性回归模型接受的参数是一个特征矩阵，那么这里需要将一维的特征向量转换成矩阵形式才行。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X = data[<span class="string">&#x27;population&#x27;</span>].values.reshape(-<span class="number">1</span>, <span class="number">1</span>) <span class="comment"># 重构特征的数据形状</span></span><br><span class="line">y = data[<span class="string">&#x27;profit&#x27;</span>].values</span><br></pre></td></tr></table></figure>
-
-<h2 id="构建模型"><a href="#构建模型" class="headerlink" title="构建模型"></a>构建模型</h2><p>首先利用构造函数初始化一个线性回归模型对象 <code>model</code> ，然后利用现有的训练数据训练模型。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line"></span><br><span class="line">model = LinearRegression()</span><br><span class="line">model.fit(X, y) <span class="comment"># 输入训练数据训练模型</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p>从模型中取出最终训练后的参数：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">slope = model.coef_[<span class="number">0</span>]</span><br><span class="line">intercept = model.intercept_</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Linear model equations: y = <span class="subst">&#123;slope:<span class="number">.2</span>f&#125;</span>x + <span class="subst">&#123;intercept:<span class="number">.2</span>f&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>查看最终的模型：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Linear model equations: y = 1.19x + -3.90</span><br></pre></td></tr></table></figure>
-
-<p>通过取出的参数来绘制图形，查看模型的拟合效果是否良好：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">data.plot(kind=<span class="string">&#x27;scatter&#x27;</span>, x=<span class="string">&#x27;population&#x27;</span>, y=<span class="string">&#x27;profit&#x27;</span>, label=<span class="string">&#x27;Data&#x27;</span>)</span><br><span class="line">plt.plot(X, model.predict(X), color=<span class="string">&#x27;red&#x27;</span>, label=<span class="string">&#x27;Linear Fit&#x27;</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
-<img src="/img/linear_regression_1.png" width=70%>
-
-<center>图 2 线性回归模型的拟合效果</center>
-
-<h1 id="Sklearn-多变量线性回归"><a href="#Sklearn-多变量线性回归" class="headerlink" title="Sklearn 多变量线性回归"></a>Sklearn 多变量线性回归</h1><p>多变量回归模型的构建大同小异，也是一样的步骤。这里假设有数据 <code>ex1data2.txt</code>，数据包含了房屋面积，卧室数量和房屋的价格，以前两者为特征来预测房屋价格。</p>
-<h2 id="数据处理与训练"><a href="#数据处理与训练" class="headerlink" title="数据处理与训练"></a>数据处理与训练</h2><p>首先读取数据：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data = pd.read_csv(<span class="string">&#x27;ex1data2.txt&#x27;</span>, header=<span class="literal">None</span>, names=[<span class="string">&#x27;area&#x27;</span>, <span class="string">&#x27;bedrooms&#x27;</span>, <span class="string">&#x27;price&#x27;</span>])</span><br><span class="line"><span class="built_in">print</span>(data.head())</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   area  bedrooms   price</span><br><span class="line"><span class="number">0</span>  <span class="number">2104</span>         <span class="number">3</span>  <span class="number">399900</span></span><br><span class="line"><span class="number">1</span>  <span class="number">1600</span>         <span class="number">3</span>  <span class="number">329900</span></span><br><span class="line"><span class="number">2</span>  <span class="number">2400</span>         <span class="number">3</span>  <span class="number">369000</span></span><br><span class="line"><span class="number">3</span>  <span class="number">1416</span>         <span class="number">2</span>  <span class="number">232000</span></span><br><span class="line"><span class="number">4</span>  <span class="number">3000</span>         <span class="number">4</span>  <span class="number">539900</span></span><br></pre></td></tr></table></figure>
-
-<p>训练模型</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">X = data[[<span class="string">&#x27;area&#x27;</span>, <span class="string">&#x27;bedrooms&#x27;</span>]].values</span><br><span class="line">y = data[<span class="string">&#x27;price&#x27;</span>].values</span><br><span class="line"></span><br><span class="line">model = LinearRegression()</span><br><span class="line">model.fit(X, y)</span><br></pre></td></tr></table></figure>
-
-<h2 id="验证-1"><a href="#验证-1" class="headerlink" title="验证"></a>验证</h2><p>查看训练后的模型的参数：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">coefficients = model.coef_</span><br><span class="line">intercept = model.intercept_</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Linear model equation: y = <span class="subst">&#123;coefficients[<span class="number">0</span>]:<span class="number">.2</span>f&#125;</span> * area + <span class="subst">&#123;coefficients[<span class="number">1</span>]:<span class="number">.2</span>f&#125;</span> * bedrooms + <span class="subst">&#123;intercept:<span class="number">.2</span>f&#125;</span>&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Linear model equation: y = 139.21 * area + -8738.02 * bedrooms + 89597.91</span><br></pre></td></tr></table></figure>
-
-<p>这里如果需要画图，则需要绘制一个三维图片，因为此处的特征是二维的。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">fig = plt.figure(figsize=(<span class="number">10</span>, <span class="number">8</span>))</span><br><span class="line">ax = fig.add_subplot(<span class="number">111</span>, projection=<span class="string">&#x27;3d&#x27;</span>)</span><br><span class="line"></span><br><span class="line">ax.scatter(data[<span class="string">&#x27;area&#x27;</span>], data[<span class="string">&#x27;bedrooms&#x27;</span>], data[<span class="string">&#x27;price&#x27;</span>], color=<span class="string">&#x27;blue&#x27;</span>)</span><br><span class="line"></span><br><span class="line">area_range = np.linspace(data[<span class="string">&#x27;area&#x27;</span>].<span class="built_in">min</span>(), data[<span class="string">&#x27;area&#x27;</span>].<span class="built_in">max</span>(), <span class="number">100</span>)</span><br><span class="line">bedrooms_range = np.linspace(data[<span class="string">&#x27;bedrooms&#x27;</span>].<span class="built_in">min</span>(), data[<span class="string">&#x27;bedrooms&#x27;</span>].<span class="built_in">max</span>(), <span class="number">100</span>)</span><br><span class="line">area_grid, bedrooms_grid = np.meshgrid(area_range, bedrooms_range)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用模型的预测方法</span></span><br><span class="line">price_grid = model.predict(np.c_[area_grid.ravel(), bedrooms_grid.ravel()]).reshape(area_grid.shape)</span><br><span class="line"></span><br><span class="line">ax.plot_surface(area_grid, bedrooms_grid, price_grid, color=<span class="string">&#x27;red&#x27;</span>, alpha=<span class="number">0.5</span>, rstride=<span class="number">100</span>, cstride=<span class="number">100</span>)</span><br><span class="line"></span><br><span class="line">ax.set_xlabel(<span class="string">&#x27;Area&#x27;</span>)</span><br><span class="line">ax.set_ylabel(<span class="string">&#x27;Bedrooms&#x27;</span>)</span><br><span class="line">ax.set_zlabel(<span class="string">&#x27;Price&#x27;</span>)</span><br><span class="line">ax.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
-<img src="/img/linear_regression_2.png" width=80%>
-
-<center> 图 3 多变量模型的拟合效果</center>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
 
 
 
